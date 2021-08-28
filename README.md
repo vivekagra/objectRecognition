@@ -1,4 +1,7 @@
 # Object Recognition
+
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
+
 This will detetct object and predicts its 3D pose 
 
 ## Steps to install Object Recognition Module
@@ -58,13 +61,6 @@ cd objectRecognition
 wget https://pjreddie.com/media/files/yolov3.weights
 python3 convert.py yolov3.cfg yolov3.weights model_data/yolo.h5
 ```
-
-
-
-
-# keras-yolo3
-
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
 
 
 
