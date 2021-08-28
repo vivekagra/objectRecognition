@@ -38,7 +38,7 @@ pip3 install pyrealsense2
 pip3 install tensorflow==1.14.0
 ```
 
-5. Install keras
+6. Install keras
 ```
 pip3 install keras==2.2.5
 ```
