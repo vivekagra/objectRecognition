@@ -1,28 +1,73 @@
-# keras-yolo3
+# Object Recognition
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
 
-## Introduction
+This will detetct object and predicts its 3D pose 
 
-A Keras implementation of YOLOv3 (Tensorflow backend) inspired by [allanzelener/YAD2K](https://github.com/allanzelener/YAD2K).
+## Steps to install Object Recognition Module
 
+1. Install CMake
+```
+sudo apt-get install cmake
+```
+  
+2. Install Realsense
+```
+sudo apt-key adv --keyserver keys.gnupg.net --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE || sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE
+sudo add-apt-repository "deb https://librealsense.intel.com/Debian/apt-repo focal main" -u
+sudo apt-get install librealsense2-dkms
+sudo apt-get install librealsense2-utils
+sudo apt-get install librealsense2-dev
+sudo apt-get install librealsense2-dbg
+sudo apt-get update
+sudo apt-get upgrade
+```
 
----
+3. Install Python3-pip
+```
+sudo apt install python3-pip
+```
 
-## Quick Start
+4. Install Realsense Wrapper
+```
+pip3 install pyrealsense2
+```
 
-1. Download YOLOv3 weights from [YOLO website](http://pjreddie.com/darknet/yolo/).
-2. Convert the Darknet YOLO model to a Keras model.
-3. Run YOLO detection.
+5. Install TensorFlow
+```
+pip3 install tensorflow==1.14.0
+```
 
+5. Install keras
+```
+pip3 install keras==2.2.5
+```
+
+7. Uninstall h5py current version and install hypy-2.10.0
+```
+pip3 uninstall h5py
+pip3 install h5py==2.10.0
+```
+
+8. Install Other Libraries
+```
+pip3 install matplotlib
+pip3 install opencv-python
+```
+
+9. Now follow the below steps to install the objectRecognition Package
+```
+git clone https://github.com/vivekagra/objectRecognition.git
+cd objectRecognition
+```
+
+10. Download YOLOv3 weights from [YOLO website](http://pjreddie.com/darknet/yolo/) and Convert the Darknet YOLO model to a Keras model.
 ```
 wget https://pjreddie.com/media/files/yolov3.weights
-python convert.py yolov3.cfg yolov3.weights model_data/yolo.h5
-python yolo_video.py [OPTIONS...] --image, for image detection mode, OR
-python yolo_video.py [video_path] [output_path (optional)]
+python3 convert.py yolov3.cfg yolov3.weights model_data/yolo.h5
 ```
 
-For Tiny YOLOv3, just do in a similar way, just specify model path and anchor path with `--model model_file` and `--anchors anchor_file`.
+
 
 ### Usage
 Use --help to see usage of yolo_video.py:
@@ -47,7 +92,8 @@ optional arguments:
 ```
 ---
 
-4. MultiGPU usage: use `--gpu_num N` to use N GPUs. It is passed to the [Keras multi_gpu_model()](https://keras.io/utils/#multi_gpu_model).
+
+MultiGPU usage: use `--gpu_num N` to use N GPUs. It is passed to the [Keras multi_gpu_model()](https://keras.io/utils/#multi_gpu_model).
 
 ## Training
 
