@@ -20,6 +20,43 @@ sudo apt-get update
 sudo apt-get upgrade
 ```
 
+3. Install Python3-pip
+```
+sudo apt install python3-pip
+```
+
+4. Install Realsense Wrapper
+```
+pip3 install pyrealsense2
+```
+
+5. Install TensorFlow
+```
+pip3 install tensorflow==1.14.0
+```
+
+6. Uninstall h5py current version and install hypy-2.10.0
+```
+pip3 uninstall h5py
+pip3 install h5py==2.10.0
+```
+
+7. Install Other Libraries
+```
+pip3 install matplotlib
+pip3 install opencv-python
+```
+
+8. Now follow the below steps to install the objectRecognition Package
+```
+git clone https://github.com/vivekagra/objectRecognition.git
+cd objectRecognition
+wget https://pjreddie.com/media/files/yolov3.weights
+python3 convert.py yolov3.cfg yolov3.weights model_data/yolo.h5
+```
+
+
+
 
 # keras-yolo3
 
