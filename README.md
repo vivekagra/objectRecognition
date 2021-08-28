@@ -51,6 +51,10 @@ pip3 install opencv-python
 ```
 git clone https://github.com/vivekagra/objectRecognition.git
 cd objectRecognition
+```
+
+9. Download YOLOv3 weights from [YOLO website](http://pjreddie.com/darknet/yolo/) and Convert the Darknet YOLO model to a Keras model.
+```
 wget https://pjreddie.com/media/files/yolov3.weights
 python3 convert.py yolov3.cfg yolov3.weights model_data/yolo.h5
 ```
@@ -62,27 +66,7 @@ python3 convert.py yolov3.cfg yolov3.weights model_data/yolo.h5
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
 
-## Introduction
 
-A Keras implementation of YOLOv3 (Tensorflow backend) inspired by [allanzelener/YAD2K](https://github.com/allanzelener/YAD2K).
-
-
----
-
-## Quick Start
-
-1. Download YOLOv3 weights from [YOLO website](http://pjreddie.com/darknet/yolo/).
-2. Convert the Darknet YOLO model to a Keras model.
-3. Run YOLO detection.
-
-```
-wget https://pjreddie.com/media/files/yolov3.weights
-python convert.py yolov3.cfg yolov3.weights model_data/yolo.h5
-python yolo_video.py [OPTIONS...] --image, for image detection mode, OR
-python yolo_video.py [video_path] [output_path (optional)]
-```
-
-For Tiny YOLOv3, just do in a similar way, just specify model path and anchor path with `--model model_file` and `--anchors anchor_file`.
 
 ### Usage
 Use --help to see usage of yolo_video.py:
