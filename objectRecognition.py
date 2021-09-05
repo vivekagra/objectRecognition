@@ -21,14 +21,16 @@ class objectRecognition():
         self.bridge = CvBridge()
         self.keystroke = 0
 
-        #rospy.Subscriber('/realsense/color/image_raw',Image, self.callback)
+        # for gazebo simulation
+        rospy.Subscriber('/realsense/color/image_raw',Im, self.image_callback)
+        rospy.Subscriber('/realsense/depth/image_rect_raw',Im, self.depth_callback)
         
         # rospy.Subscriber('/camera/color/image_raw',Im, self.color_callback)
         # rospy.Subscriber('/camera/depth/image_rect_raw',Im, self.depth_callback)
 
         # for astra camera
-        rospy.Subscriber('/camera/rgb/image_raw',Im, self.image_callback)
-        rospy.Subscriber('/camera/depth/image_raw',Im, self.depth_callback)
+        #rospy.Subscriber('/camera/rgb/image_raw',Im, self.image_callback)
+        #rospy.Subscriber('/camera/depth/image_raw',Im, self.depth_callback)
 
     def image_callback(self,data):
         try: 
