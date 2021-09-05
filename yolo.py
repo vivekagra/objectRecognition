@@ -133,24 +133,25 @@ class YOLO(object):
         cx = int((left+right)/2)
         cy = int((top+bottom)/2)
         z = depth_img[cy][cx]
-        n = 3
-        kernel = np.zeros((n*n),dtype=np.float32)
-        for i in range(n):
-            for j in range(n):
-                kernel[n*i+j] = depth_img[cy-n+1+i][cx-n+1+j]
+        # n = 3
+        # kernel = np.zeros((n*n),dtype=np.float32)
+        # for i in range(n):
+        #     for j in range(n):
+        #         kernel[n*i+j] = depth_img[cy-n+1+i][cx-n+1+j]
         
-        mode = stats.mode(kernel)[0][-1]
-        mean = np.mean(kernel)
-        if(mode>=mean):
-            z = mode
-        else:
-            z = mean
-        z = z/1000 # depth in metres
+        # mode = stats.mode(kernel)[0][-1]
+        # mean = np.mean(kernel)
+        # if(mode>=mean):
+        #     z = mode
+        # else:
+        #     z = mean
+
+        # z = z/1000 # depth in metres
         
         x = (cx - (w/2))*(z/(f_x))
         y = (cy - (h/2))*(z/(f_y))
-
-        return (x,y,z)
+        
+        return (cx,cy,z)
 
 
     def detect_image(self, color_img, depth_img):
