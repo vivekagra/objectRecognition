@@ -35,12 +35,12 @@ pip3 install pyrealsense2
 
 5. Install TensorFlow
 ```
-pip3 install tensorflow==1.14.0
+pip3 install tensorflow
 ```
 
 6. Install keras
 ```
-pip3 install keras==2.2.5
+pip3 install keras==2.6
 ```
 
 7. Uninstall h5py current version and install hypy-2.10.0
