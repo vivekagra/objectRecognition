@@ -35,33 +35,33 @@ pip3 install pyrealsense2
 
 5. Install TensorFlow
 ```
-pip3 install tensorflow
+pip3 install tensorflow==2.2.0
 ```
 
 6. Install keras
 ```
-pip3 install keras==2.6
+pip3 install keras==2.3
 ```
 
-7. Uninstall h5py current version and install hypy-2.10.0
+<!-- 7. Uninstall h5py current version and install hypy-2.10.0
 ```
 pip3 uninstall h5py
 pip3 install h5py==2.10.0
-```
+``` -->
 
-8. Install Other Libraries
+7. Install Other Libraries
 ```
 pip3 install matplotlib
 pip3 install opencv-python
 ```
 
-9. Now follow the below steps to install the objectRecognition Package
+8. Now follow the below steps to install the objectRecognition Package
 ```
 git clone https://github.com/vivekagra/objectRecognition.git
 cd objectRecognition
 ```
 
-10. Download YOLOv3 weights from [YOLO website](http://pjreddie.com/darknet/yolo/) and Convert the Darknet YOLO model to a Keras model.
+9. Download YOLOv3 weights from [YOLO website](http://pjreddie.com/darknet/yolo/) and Convert the Darknet YOLO model to a Keras model.
 ```
 wget https://pjreddie.com/media/files/yolov3.weights
 python3 convert.py yolov3.cfg yolov3.weights model_data/yolo.h5
