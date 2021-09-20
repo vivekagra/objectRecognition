@@ -9,6 +9,7 @@ import roslib
 import rospy
 from sensor_msgs.msg import Image as Im
 from cv_bridge import CvBridge, CvBridgeError
+from geometry_msgs.msg import Twist, PoseStamped, Point, Quaternion, TransformStamped, PoseArray
 
 from yolo import YOLO
 
@@ -21,12 +22,14 @@ class objectRecognition():
         self.bridge = CvBridge()
         self.keystroke = 0
 
+        self.pos_pub = rospy.Publisher('obj_pos',Point)
         # for gazebo simulation
         rospy.Subscriber('/realsense/color/image_raw',Im, self.image_callback)
         rospy.Subscriber('/realsense/depth/image_rect_raw',Im, self.depth_callback)
         
-        # rospy.Subscriber('/camera/color/image_raw',Im, self.color_callback)
-        # rospy.Subscriber('/camera/depth/image_rect_raw',Im, self.depth_callback)
+        # for realsense camera
+        #rospy.Subscriber('/camera/color/image_raw',Im, self.image_callback)
+        #rospy.Subscriber('/camera/depth/image_rect_raw',Im, self.depth_callback)
 
         # for astra camera
         #rospy.Subscriber('/camera/rgb/image_raw',Im, self.image_callback)
@@ -53,7 +56,20 @@ class objectRecognition():
             color_array = np.array(self.color_img, dtype=np.uint8)
             color_array2= Image.fromarray(self.color_img)   
 
-            img = self.yolo.detect_image(color_array2, depth_array)
+            img, obj_pose_dict = self.yolo.detect_image(color_array2, depth_array)
+            #print(obj_pose_dict)
+            try:
+                self.pose = obj_pose_dict['fire hydrant']
+                print("Found")
+            except:
+                self.pose = (500, 320, 1)
+
+            self.obj_pose = Point()
+            self.obj_pose.x = self.pose[0]
+            self.obj_pose.y = self.pose[1]
+            self.obj_pose.z = self.pose[2]
+            
+            print(self.pose)
             result = np.asarray(img)
 
             cv2.normalize(depth_array, depth_array, 0, 1, cv2.NORM_MINMAX)
@@ -76,9 +92,17 @@ class objectRecognition():
         rospy.loginfo("\n\n***Initiating Object Recognition Node***\n\n")
         #rate = rospy.Rate(2)
         rospy.on_shutdown(self.shutdown)
+
+        self.pose = (500, 320, 1)
+        self.obj_pose = Point()
+        self.obj_pose.x = 320
+        self.obj_pose.y = 320
+        self.obj_pose.z = 1
+
         while not rospy.is_shutdown():
             self.detect()
             #rospy.sleep(5)
+            self.pos_pub.publish(self.obj_pose)
         rospy.spin()
     
     def shutdown(self):

@@ -172,11 +172,13 @@ class YOLO(object):
                 self.K_learning_phase: 0
             })
 
-        print('\n\nFound {} boxes for {}'.format(len(out_boxes), 'img'))
+        # print('\n\nFound {} boxes for {}'.format(len(out_boxes), 'img'))
 
         font = ImageFont.truetype(font='font/FiraMono-Medium.otf',
                     size=np.floor(3e-2 * color_img.size[1] + 0.5).astype('int32'))
         thickness = (color_img.size[0] + color_img.size[1]) // 300
+        
+        obj_pose_dict = {}
 
         for i, c in reversed(list(enumerate(out_classes))):
             predicted_class = self.class_names[c]
@@ -194,7 +196,8 @@ class YOLO(object):
             right = min(color_img.size[0], np.floor(right + 0.5).astype('int32'))
             
             pose = self.pixelToPose(depth_img, top, left, bottom, right)
-            print(label, "is present at", pose)
+            obj_pose_dict[predicted_class] = pose
+            #print(label, "is present at", pose)
 
             #print(label, "is present in box", (top, left), (bottom, right), "at a distance of", depth, "metres")
 
@@ -216,7 +219,7 @@ class YOLO(object):
 
         end = timer()
         print(end - start)
-        return color_img
+        return color_img, obj_pose_dict
 
     def close_session(self):
         self.sess.close()    
