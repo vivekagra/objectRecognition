@@ -22,7 +22,7 @@ class objectRecognition():
         self.bridge = CvBridge()
         self.keystroke = 0
 
-        self.pos_pub = rospy.Publisher('obj_pos',Point)
+        self.pos_pub = rospy.Publisher('obj_pos',Point, queue_size=1)
         # for gazebo simulation
         rospy.Subscriber('/realsense/color/image_raw',Im, self.image_callback)
         rospy.Subscriber('/realsense/depth/image_rect_raw',Im, self.depth_callback)

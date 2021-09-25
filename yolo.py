@@ -6,8 +6,9 @@ Class definition of YOLO_v3 style detection model on image and video
 
 from timeit import default_timer as timer
 
-import tensorflow.compat.v1.keras.backend as K
 import tensorflow as tf
+import tensorflow.compat.v1.keras.backend as K
+
 tf.compat.v1.disable_eager_execution()
 from tensorflow.keras.models import load_model
 from tensorflow.keras.layers import Input
@@ -48,6 +49,11 @@ class YOLO(object):
             return "Unrecognized attribute name '" + n + "'"
 
     def __init__(self, **kwargs):
+        physical_devices = tf.config.experimental.list_physical_devices('GPU')
+        if len(physical_devices) > 0:
+            tf.config.experimental.set_memory_growth(physical_devices[0], True)
+        
+        
         self.model_path = 'model_data/yolo.h5'
         self.anchors_path = 'model_data/yolo_anchors.txt'
         self.classes_path = 'model_data/coco_classes.txt'
@@ -64,7 +70,12 @@ class YOLO(object):
         with self.sess.as_default():
             with self.sess.graph.as_default():
                 self.K_learning_phase = K.learning_phase()
+
+
+        
         self.boxes, self.scores, self.classes = self.generate()
+
+
 
     def _get_class(self):
         classes_path = os.path.expanduser(self.classes_path)
