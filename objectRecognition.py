@@ -1,6 +1,7 @@
 import colorsys, os, cv2
 import pyrealsense2 as rs
 import numpy as np
+import math
 
 from PIL import Image
 from PIL import ImageFont, ImageDraw
@@ -22,7 +23,7 @@ class objectRecognition():
         self.bridge = CvBridge()
         self.keystroke = 0
 
-        self.pos_pub = rospy.Publisher('obj_pos',Point, queue_size=1)
+        self.pos_pub = rospy.Publisher('obj_pos',Point, queue_size=2)
         # for gazebo simulation
         rospy.Subscriber('/realsense/color/image_raw',Im, self.image_callback)
         rospy.Subscriber('/realsense/depth/image_rect_raw',Im, self.depth_callback)
@@ -64,6 +65,9 @@ class objectRecognition():
             except:
                 self.pose = (500, 320, 1)
 
+            if(math.isnan(self.pose[2])):
+                self.pose[2] = 10
+                
             self.obj_pose = Point()
             self.obj_pose.x = self.pose[0]
             self.obj_pose.y = self.pose[1]
@@ -90,7 +94,7 @@ class objectRecognition():
 
     def spin(self):
         rospy.loginfo("\n\n***Initiating Object Recognition Node***\n\n")
-        #rate = rospy.Rate(2)
+        rate = rospy.Rate(2)
         rospy.on_shutdown(self.shutdown)
 
         self.pose = (500, 320, 1)
@@ -101,8 +105,8 @@ class objectRecognition():
 
         while not rospy.is_shutdown():
             self.detect()
-            #rospy.sleep(5)
             self.pos_pub.publish(self.obj_pose)
+            rate.sleep()
         rospy.spin()
     
     def shutdown(self):
